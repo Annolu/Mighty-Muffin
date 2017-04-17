@@ -8,11 +8,9 @@ function init(){
 var lastReportTime=0,
   totalSales=0,
   arrayGeneral=[],
-  arrayGFLS= [],
   arraySums= [],
   arryaNames= [],
-  dlUno= document.getElementById("dlUno"),
-  dlDue= document.getElementById("dlDue"),
+
   map,
   bestSeller,
   sum,
@@ -151,7 +149,7 @@ function updateSales(sale){
   arrayGeneral.push(sale);
   updateLatestSales(sale);
   findAbsoluteBestSeller(sale);
-  if(arrayGeneral.length>1){
+  if(arrayGeneral.length>0){
     findBestSeller();
   }
   addDataToDon(sale);
@@ -173,12 +171,15 @@ function toDisc(a,b){
 
 function findBestSeller(){
     arrayGeneral.sort(toAsc);
+    //if there are sums
     if(arraySums[0]){
+      //that are lower than the higher of the arrayGeneral, stick with the arrayGeneral
         if(arrayGeneral[0].sales>arraySums[0].sales){
             bestSellerH.innerHTML=arrayGeneral[0].sales;
             bestSellerP.innerHTML=arrayGeneral[0].name;
             getAddress(arrayGeneral[0].latitude,arrayGeneral[0].longitude);
         }
+    //otherwise use the higher of the arrayGeneral
     }else{
         bestSellerH.innerHTML=arrayGeneral[0].sales;
         bestSellerP.innerHTML=arrayGeneral[0].name;
@@ -187,8 +188,9 @@ function findBestSeller(){
 };
 
 function findAbsoluteBestSeller(sale){
+  //transform the arrayGeneral into an array of all names
     arrayNames= sortArrayGByName();
-
+  //if (the last name is already present in the array of names) and (it's not the last one) it means it's a repetition
     if(arrayNames.indexOf(sale.name)>0 && arrayNames.indexOf(sale.name) !== arrayNames.lastIndexOf(sale.name)){
         let arrayNameRepeated= crateArrayRepeatedName(sale);
         sum= findSum(arrayNameRepeated)
@@ -196,8 +198,8 @@ function findAbsoluteBestSeller(sale){
         deleteCopies();
         arraySums.push(sum);
         arraySums.sort(toDisc);
-        // console.table(arraySums);
-        updateBestseller(arraySums);
+        console.table(arraySums);
+        updateBestseller(arraySums[0]);
     }
 }
 
@@ -249,11 +251,12 @@ function findSum(arrayNameRepeated){
   return {sales :sum, name: name, latitude: lat, longitude: long};
   }
 
-function updateBestseller(arraySums){
-  if(arraySums[0].sales>arrayGeneral[0].sales){
-    bestSellerH.innerHTML=arraySums[0].sales;
-    bestSellerP.innerHTML=arraySums[0].name;
-    getAddress(arraySums[0].latitude,arraySums[0].longitude);
+function updateBestseller(bestSeller){
+  //if there's sum higher than 9 (which is the highest the arrayGeneral can have)
+  if(bestSeller.sales>arrayGeneral[0].sales){
+    bestSellerH.innerHTML=bestSeller.sales;
+    bestSellerP.innerHTML=bestSeller.name;
+    getAddress(bestSeller.latitude,bestSeller.longitude);
   }
 }
 
@@ -347,46 +350,41 @@ function updateBestSellerP(infowindow,addressPara){
 
 function updateLatestSales(sale){
   updateLatestSaleOne(sale);
-  updateLatestSaletwo(sale);
+  updateLatestSaleTwo(sale);
 };
 
 function updateLatestSaleOne(sale){
-  if(dlUno.childNodes[0]){
-    dlUno.removeChild(dlUno.childNodes[0])
+
+  let lsOne= document.getElementById("lsOne");
+
+  if(lsOne.childNodes[0]){
+    lsOne.removeChild(lsOne.childNodes[0])
   }
-  arrayGFLS.push(sale);
-  console.log(arrayGFLS);
-  console.log(arrayGeneral);
-  let paraLSUno= document.createElement("p");
-  paraLSUno.innerHTML=arrayGFLS[arrayGFLS.length-1].name +
-                  "<br> Sales: " + arrayGFLS[arrayGFLS.length-1].sales +
-                  " at: " + prettyDate(new Date(arrayGFLS[arrayGFLS.length-1].time));
-  paraLSUno.classList.add("animate-in");
-  dlUno.appendChild(paraLSUno);
+  let latestSaleOne= document.createElement("p");
+  latestSaleOne.innerHTML=sale.name +
+                  "<br> Sales: " + sale.sales +
+                  " at: " + prettyDate(new Date(sale.time));
+  latestSaleOne.classList.add("animate-in");
+  lsOne.appendChild(latestSaleOne);
 }
 
-function updateLatestSaletwo(sale){
-  if(arrayGFLS[arrayGFLS.length-2]){
+var arrayLatestSales= [];
 
-    dlDue.innerHTML= '';
-    /*
-    if(dlDue.childNodes[0]){
-        if(dlDue.childNodes[1]){
-            console.log(dlDue.childNodes[1])
-            dlDue.removeChild(dlDue.childNodes[1])
-            console.log(dlDue.childNodes[1])
-            console.log("dentro");
-        }
-        dlDue.removeChild(dlDue.childNodes[0])
-    }
-    */
-    let paraLSDue= document.createElement("p");
+function updateLatestSaleTwo(sale){
+  let lsTwo= document.getElementById("lsTwo");
 
-    paraLSDue.innerHTML=arrayGFLS[arrayGFLS.length-2].name +
-                    "<br> Sales: " + arrayGFLS[arrayGFLS.length-2].sales +
-                    " at: " + prettyDate(new Date(arrayGFLS[arrayGFLS.length-2].time));
-    paraLSDue.classList.add("animate-in");
-    setTimeout(function(){dlDue.appendChild(paraLSDue)}, 100);
+  arrayLatestSales.push(sale);
+  // console.log(arrayLatestSales);
+  if(arrayLatestSales[arrayLatestSales.length-2]){
+    lsTwo.innerHTML= '';
+
+    let latestSaleTwo= document.createElement("p");
+
+    latestSaleTwo.innerHTML=arrayLatestSales[arrayLatestSales.length-2].name +
+                    "<br> Sales: " + arrayLatestSales[arrayLatestSales.length-2].sales +
+                    " at: " + prettyDate(new Date(arrayLatestSales[arrayLatestSales.length-2].time));
+    latestSaleTwo.classList.add("animate-in");
+    setTimeout(function(){lsTwo.appendChild(latestSaleTwo)}, 100);
   }
 }
 

@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Mighty Muffin Dashboard</title>    
+    <title>Mighty Muffin Dashboard</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">   
-    
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <!-- Latest compiled and minified CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel="stylesheet">    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">   
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -50,13 +50,13 @@
                       <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active sales-graph" id="sales-graph">
-                                <canvas id="salesGraph" width="350" height="290"></canvas>  
+                                <canvas id="salesGraph" width="350" height="290"></canvas>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="map-graph">
                                 <div id="map" class="map"></div>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                 </div>
             </div>
             <div class="col-md-3 right-col">
@@ -66,7 +66,7 @@
                         <h1 id="bestSellerH"></h1>
                         <p id="bestSellerP"></p>
                     </div>
-                </div>        
+                </div>
                 <div class="panel panel-default panel-big">
                     <div class="panel-body piechart">
                         <div>
@@ -78,27 +78,27 @@
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active top-seller" id="top-seller">
-                                    <canvas id="topSellers" class="topSellerCanvas" width="200" height="215"></canvas>  
+                                    <canvas id="topSellers" class="topSellerCanvas" width="200" height="215"></canvas>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="live-sales">
                                     <div class="table-sales">
                                         <table class="table table-striped">
-                                            <thead id="fixedTh"> 
-                                                <tr><th>City</th> <th>Sales</th><th>Time</th></tr> 
+                                            <thead id="fixedTh">
+                                                <tr><th>City</th> <th>Sales</th><th>Time</th></tr>
                                             </thead>
-                                            <tbody id="liveTable"> 
-                                            </tbody> 
+                                            <tbody id="liveTable">
+                                            </tbody>
                                         </table>
                                     </div>
-                                </div>    
+                                </div>
                             </div>
-                        </div>   
+                        </div>
                     </div>
-                </div>           
+                </div>
             </div>
         </div>
         <!--
-        <div id="myModal" class="modal">         
+        <div id="myModal" class="modal">
             <span class="close">&times;</span>
 
             <div class="modal-content">
@@ -106,19 +106,17 @@
             </div>
         </div>
         -->
-    </div>   
-    
+    </div>
+
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js "></script>   
-    <script src="js/script.js"></script>       
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js "></script>
+    <script src="js/script.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBavYd6Wo-VFNdL6CeR8WzOjCpz3-1hW7Y&">
     </script> 
-      
-    
 </body>
 </html>

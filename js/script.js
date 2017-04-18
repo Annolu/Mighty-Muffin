@@ -390,7 +390,7 @@ function updateLatestSaleTwo(sale){
 
 function addDataToDon(sale){
   let arrayOfBest= findArrayOfBest();
-  console.table(arrayOfBest);
+  // console.table(arrayOfBest);
   let arrayFor5Best= [];
   let arrayOfFiveBest= findBestFive(arrayOfBest, arrayFor5Best);
   dataDoughnut.labels= findArrayBest5Names(arrayOfFiveBest);
@@ -481,7 +481,10 @@ function createModalSpan(divModal,divContent){
   divContent.appendChild(modalSpan);
   crateDivContainingP(divModal, divContent);
   modalSpan.addEventListener("click", function(){
-      containerFluid.removeChild(divModal);
+      divModal.style.visibility= 'hidden';
+      divModal.style.opacity= '0';
+
+
   })
 }
 
@@ -507,5 +510,7 @@ function createPContent(divContainingP, divModal){
       }
     }
   }
-  divModal.style.display = "block";
+  divModal.style.visibility = "visible";
+  divModal.style.opacity= '1';
+
 }

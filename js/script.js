@@ -390,6 +390,7 @@ function updateLatestSaleTwo(sale){
 
 function addDataToDon(sale){
   let arrayOfBest= findArrayOfBest();
+  console.table(arrayOfBest);
   let arrayFor5Best= [];
   let arrayOfFiveBest= findBestFive(arrayOfBest, arrayFor5Best);
   dataDoughnut.labels= findArrayBest5Names(arrayOfFiveBest);
@@ -398,10 +399,24 @@ function addDataToDon(sale){
 }
 
 function findArrayOfBest(){
-  if(arraySums){
+  var arrayDeSingulos;
+  //add the array of sums to the arrayGeneral and then sort it ascending
+  if(arraySums.length>0){
+    for(sum of arraySums){
+      for(sale of arrayGeneral){
+        if(sum.name==sale.name){
+          arrayGeneral.filter(function(item, index, arr){
+            if(item.name == sum.name){
+              return arrayGeneral.splice(index, 1)
+            }
+          })
+        }
+      }
+    }
+
     return arrayGeneral.concat(arraySums).sort(function(a,b){
         return b.sales-a.sales;
-    })
+    });
   }else{
     return arrayGeneral;
   }

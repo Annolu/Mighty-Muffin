@@ -14,6 +14,12 @@
 
 </head>
 <body>
+  <div class="loader-bg" id="loader-bg">
+    <div class="loader-wrapper">
+      <div class="circle one"></div>
+      <div class="circle two"></div>
+    </div>
+  </div>
     <div class="mobile-top">
         <img src="img/muffin.svg" class="logo">
     </div>
@@ -22,8 +28,10 @@
             <div class="col-md-1 col-sm-1 hidden-xs hidden-sm sidebar">
                 <img src="img/muffin.svg" class="logo">
             </div>
+            <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12">
+              <h2>Mighty Muffin Ltd. <small>California, USA</small></h2>
+            </div>
             <div class="col-md-8 center-col">
-            <h2>Mighty Muffin Ltd. <small>California, USA</small></h2>
                 <div class="total-sales">
                     <div class="col-md-8 col-sm-8 col-xs-8">
                         <p class="title">Total Sales</p>
@@ -60,9 +68,9 @@
                 </div>
             </div>
             <div class="col-md-3 right-col">
+              <p class="title" id="bestSellerDiv">Best seller</p>
                 <div class="panel panel-default panel-medium">
                     <div class="panel-body" id="panel-body">
-                        <p class="title" id="bestSellerDiv">Best seller</p>
                         <h1 id="bestSellerH"></h1>
                         <p id="bestSellerP"></p>
                     </div>
@@ -78,7 +86,7 @@
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active top-seller" id="top-seller">
-                                    <canvas id="topSellers" class="topSellerCanvas" width="200" height="215"></canvas>
+                                    <canvas id="topSellers" class="topSellerCanvas"></canvas>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="live-sales">
                                     <div class="table-sales">

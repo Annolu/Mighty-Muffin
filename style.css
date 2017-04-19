@@ -4,21 +4,34 @@ html, body{
     font-family: 'Roboto', sans-serif;
     background-color: rgba(227, 204, 181, 0.2);
     overflow-x: hidden;
+    height: 100%;
+    width: 100%;
 }
 .dashboard{
     height: 100vh;
     min-height: 100vh;
 }
 
+.bg-noScroll{
+  overflow: hidden;
+}
+
+p{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
 .panel-medium{
-    height: 35vh;
-    min-height: 130px;
+    /*height: 35vh;*/
+    min-height: 155px;
     background-color: rgba(5, 97, 125, 0.7);
     /*border: 1px solid rgba(14, 20, 36, 0.2);*/
     -webkit-box-shadow: 2px 2px 14px -1px rgba(170,170,170,1);
     -moz-box-shadow: 2px 2px 14px -1px rgba(170,170,170,1);
     box-shadow: 2px 2px 14px -1px rgba(170,170,170,1);
     border-radius: 8px;
+    margin-bottom: 15px;
+    transition: all 200ms ease;
 }
 
 .panel-medium:hover{
@@ -27,7 +40,7 @@ html, body{
 }
 
 .panel-medium .panel-body{
-    padding: 30px 30px;
+    padding: 25px 15px 10px 25px;
     color: rgb(230, 239, 242);
 }
 
@@ -42,9 +55,13 @@ html, body{
 
 }
 
+.piechart{
+  min-height: 330px;
+}
+
 .table-sales{
     overflow-y: scroll;
-    height: 46vh;
+    height: 460vh;
 }
 
 .sidebar{
@@ -65,7 +82,7 @@ html, body{
 }
 
 .total-sales .totalSalesH{
-    font-size: 8vw;
+    font-size: 75px;
     font-weight: 100;
     margin-bottom: 0;
     min-height: 100px;
@@ -74,7 +91,6 @@ html, body{
 h2{
     font-size: 3vw;
     font-weight: 100;
-    margin-bottom: 0;
     margin-left: 10px;
 }
 
@@ -128,6 +144,7 @@ h2 small{
     border: 1px solid transparent;
     border-radius: 4px 4px 0 0;
     font-size: 12px;
+    transition: all 200ms ease;
 }
 
 .nav-tabs > li.active > a,
@@ -152,22 +169,22 @@ a {
 
 .dlStore{
     /*border: 1px solid rgba(14, 20, 36, 0.2); */
-    padding: 5%;
+    padding: 13px 15px 6px 13px;
     max-width: 200px;
-    border-radius: 8px;
-    min-height: 75px;
+    border-radius: 5px;
+    min-height: 70px;
     -webkit-box-shadow: 2px 2px 14px -1px rgba(170,170,170,1);
     -moz-box-shadow: 2px 2px 14px -1px rgba(170,170,170,1);
     box-shadow: 2px 2px 14px -1px rgba(170,170,170,1);
     color: rgb(230, 239, 242);
     font-weight: 300;
     background-color: rgb(4, 76, 98);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-.caca{
+/*.caca{
     min-height: 220px;
-}
+}*/
 
 .animate-in{
     animation: introDl 600ms ease-in;
@@ -189,17 +206,21 @@ a {
     transition: all 300ms ease-in;
 }
 
+.modal-content h2{
+  margin-bottom: 20px;
+}
+
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 80px auto;
+    margin: 70px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
     height: 70%;
-    transform: translateY(-400px);
-    animation: modalContent 0.5s ease both 0.3s;
-    overflow-y: scroll;
+    transform: translateY(-300px);
+    animation: modalContent 0.4s ease both 0.1s;
+    /*overflow-y: scroll;*/
     opacity: 0;
 }
 
@@ -212,11 +233,14 @@ a {
 
 .modalP{
     padding: 10px;
+
 }
 
 .divContainingP{
-    padding: 4%;
+    padding: 5px 10px;
     color: #666;
+    height: 79%;
+    overflow: scroll;
 }
 
 /* The Close Button */
@@ -226,8 +250,8 @@ a {
     font-size: 28px;
     font-weight: bold;
     position: relative;
-    top: -15px;
-    right: -15px;
+    top: -7px;
+    right: -7px;
     width: 20px;
 }
 
@@ -246,13 +270,62 @@ a {
 
 @keyframes modalContent{
     0%{
-      transform: translateY(-400px);
+      transform: translateY(-300px);
       opacity: 0;
       }
     100%{
       transform: translateY(0px);
       opacity: 1;
     }
+}
+
+/*//////LOADER//////*/
+
+
+.loader-bg{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,.5);
+  z-index: 3;
+  transition: all 50ms ease;
+}
+
+.hide-loader{
+  visibility: hidden;
+}
+
+.loader-wrapper{
+  position: relative;
+  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+  top: 270px;
+}
+
+.circle{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.one{
+  border: 5px solid #999;
+  border-top-color: white;
+  animation: rotate 1.5s ease infinite;
+}
+
+@keyframes rotate {
+  30%{
+    border-top-color: rgb(66, 189, 160)
+  }
+  50%{
+    border-top-color:rgb(54, 62, 82);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -285,15 +358,18 @@ a {
     h2{
         font-size: 5vw;
         font-weight: 100;
-        margin-bottom: 0;
-        margin-left: 10px;
+        margin: 25px 15px;
     }
 
     .total-sales .totalSalesH{
-        font-size: 10vw;
+        /*font-size: 10vw;
         font-weight: 100;
         margin-bottom: 0;
-        margin-top: 5px;
+        margin-top: 5px;*/
+    }
+
+    .modal-content{
+      width: 70%;
     }
 }
 
@@ -307,9 +383,12 @@ a {
         float: left;
         margin-right: 3%;
     }
+    .modal-content{
+      width: 85%;
+    }
 
     .top-seller{
-        max-height: 450px;
+        /*max-height: 450px;*/
     }
 
     .panel-medium{
@@ -318,11 +397,11 @@ a {
     }
 
     .panel-body{
-        min-height: 200px;
+        min-height: 150px;
     }
 
     .piechart{
-        max-height: 500px;
+        /*max-height: 500px;*/
     }
 
     .panel-big{
@@ -334,30 +413,29 @@ a {
 
     h2{
     font-size: 7vw;
-    font-weight: 100;
+    /*font-weight: 100;
     margin-bottom: 0;
-    margin-left: 10px;
+    margin-left: 10px;*/
     }
 
     .total-sales .totalSalesH{
-    font-size: 15vw;
-    font-weight: 100;
+    /*font-size: 15vw;*/
+    /*font-weight: 100;
     margin-bottom: 0;
-    margin-top: 5px;
+    margin-top: 5px;*/
     }
 
     .dlStore{
-        min-width: 35%;
-        min-height: 100px;
-        max-height: 100px;
-        padding: 9px 3px;
+        padding: 0;
+        max-width: none;
+        width: 100%;
     }
 
     .caca{
-        max-height: 35%;
+      margin-top: 25px;
     }
 
-    .caca p{
+    .dlStore p{
         /*text-align: center;*/
         padding: 15px;
     }
@@ -368,5 +446,13 @@ a {
 
     .modal-content{
         overflow: hidden;
+    }
+
+    .map-graph{
+      margin: 20px 0;
+    }
+
+    .title{
+      margin-bottom: 20px;
     }
 }

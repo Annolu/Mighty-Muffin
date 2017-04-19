@@ -19,15 +19,17 @@ var lastReportTime=0,
   bestSellerP= document.getElementById("bestSellerP"),
   bestSellerH= document.getElementById("bestSellerH"),
   panelBody= document.getElementById("panel-body"),
-  containerFluid= document.getElementById("container-fluid")
+  containerFluid= document.getElementById("container-fluid"),
+  body= document.getElementsByTagName('body')[0];
+
 
 var graphData ={
   labels: [],
   datasets: [{
     label: 'Sales',
     data: [],
-    backgroundColor: 'rgba(5, 97, 125, 0.2)',
-    borderColor:'rgba(5, 97, 125, 1)',
+    backgroundColor: '#9cbdc6',
+    borderColor:'r#859a9f',
     borderWidth: 1
   }]
 };
@@ -55,6 +57,8 @@ var myDoughnutChart = new Chart(topSellers, {
   type: 'doughnut',
   data: dataDoughnut,
   options: {
+    maintainAspectRatio: true,
+    responsive: true,
     legend: {
       display: true,
       position: 'bottom',
@@ -113,11 +117,17 @@ function fetcheData() {
 
   $.getJSON(url)
   .done(function(data) {
+    hideLoader();
     updateSales(data)
   })
   .fail(function(err){
     console.log(err);
   });
+}
+
+function hideLoader(){
+  let loader= document.getElementById('loader-bg');
+  loader.classList.add('hide-loader');
 }
 
 var drawMap= function(){
@@ -142,6 +152,7 @@ function resizeMap(){
 }
 
 function updateSales(sale){
+
   createTotalSales(sale);
   createLiveSales(sale);
   addDataToLineChart(sale)
@@ -456,13 +467,16 @@ function createModalDiv(){
   divModal.id= "myModal";
   containerFluid.appendChild(divModal);
   createModalContent(divModal);
+  body.classList.add('bg-noScroll');
 }
 
 function createModalContent(divModal){
   createDivContent(divModal);
   window.addEventListener("click", function(event) {
     if (event.target == divModal) {
-      containerFluid.removeChild(divModal)
+      body.classList.remove('bg-noScroll');
+      divModal.style.visibility= 'hidden';
+      divModal.style.opacity= '0';
     }
   })
 }
@@ -483,14 +497,13 @@ function createModalSpan(divModal,divContent){
   modalSpan.addEventListener("click", function(){
       divModal.style.visibility= 'hidden';
       divModal.style.opacity= '0';
-
-
+      body.classList.remove('bg-noScroll');
   })
 }
 
 function crateDivContainingP(divModal, divContent){
-  var headerContent= document.createElement("p");
-  headerContent.innerHTML= "<h2>Best sellers shops</h2>";
+  var headerContent= document.createElement("h2");
+  headerContent.innerHTML= "Best sellers shops";
   divContent.appendChild(headerContent);
   var divContainingP= document.createElement("div");
   divContainingP.classList.add("divContainingP");

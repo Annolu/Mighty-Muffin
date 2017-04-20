@@ -28,8 +28,8 @@ var graphData ={
   datasets: [{
     label: 'Sales',
     data: [],
-    backgroundColor: '#9cbdc6',
-    borderColor:'r#859a9f',
+    backgroundColor: 'rgba(5, 97, 125, 0.2)',
+    borderColor:'rgba(5, 97, 125, 1)',
     borderWidth: 1
   }]
 };
@@ -376,6 +376,8 @@ function updateLatestSaleOne(sale){
                   "<br> Sales: " + sale.sales +
                   " at: " + prettyDate(new Date(sale.time));
   latestSaleOne.classList.add("animate-in");
+  $('#panel-body>div').addClass('animate-in');
+
   lsOne.appendChild(latestSaleOne);
 }
 
@@ -395,6 +397,8 @@ function updateLatestSaleTwo(sale){
                     "<br> Sales: " + arrayLatestSales[arrayLatestSales.length-2].sales +
                     " at: " + prettyDate(new Date(arrayLatestSales[arrayLatestSales.length-2].time));
     latestSaleTwo.classList.add("animate-in");
+    $('#panel-body>div').addClass('animate-in');
+
     setTimeout(function(){lsTwo.appendChild(latestSaleTwo)}, 100);
   }
 }

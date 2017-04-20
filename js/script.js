@@ -209,7 +209,7 @@ function findAbsoluteBestSeller(sale){
         deleteCopies();
         arraySums.push(sum);
         arraySums.sort(toDisc);
-        console.table(arraySums);
+        // console.table(arraySums);
         updateBestseller(arraySums[0]);
     }
 }
@@ -505,21 +505,21 @@ function crateDivContainingP(divModal, divContent){
   var headerContent= document.createElement("h2");
   headerContent.innerHTML= "Best sellers shops";
   divContent.appendChild(headerContent);
-  var divContainingP= document.createElement("div");
-  divContainingP.classList.add("divContainingP");
-  divContent.appendChild(divContainingP);
+  var modalListWrapper= document.createElement("div");
+  modalListWrapper.classList.add("modal-list-wrapper");
+  divContent.appendChild(modalListWrapper);
 
-  createPContent(divContainingP, divModal);
+  createPContent(modalListWrapper, divModal);
 }
 
-function createPContent(divContainingP, divModal){
+function createPContent(modalListWrapper, divModal){
   if(arraySums.length>0){
     for (var item of arraySums){
       if(item.sales>9){
         var pContentSums= document.createElement("p");
         pContentSums.classList.add("modalP");
         pContentSums.innerHTML= item.name + " sold: " + item.sales + " muffins";
-        divContainingP.appendChild(pContentSums);
+        modalListWrapper.appendChild(pContentSums);
       }
     }
   }

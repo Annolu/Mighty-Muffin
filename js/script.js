@@ -28,8 +28,8 @@ var graphData ={
   datasets: [{
     label: 'Sales',
     data: [],
-    backgroundColor: 'rgba(5, 97, 125, 0.2)',
-    borderColor:'rgba(5, 97, 125, 1)',
+    backgroundColor: 'rgba(4, 76, 98,.7)',
+    borderColor:'rgb(4, 76, 98)',
     borderWidth: 1
   }]
 };
@@ -181,17 +181,20 @@ function toDisc(a,b){
 };
 
 function findBestSeller(){
+  $('#panel-body>div').removeClass('animate-in');
     arrayGeneral.sort(toAsc);
     //if there are sums
     if(arraySums[0]){
       //that are lower than the higher of the arrayGeneral, stick with the arrayGeneral
         if(arrayGeneral[0].sales>arraySums[0].sales){
+          $('#panel-body>div').addClass('animate-in');
             bestSellerH.innerHTML=arrayGeneral[0].sales;
             bestSellerP.innerHTML=arrayGeneral[0].name;
             getAddress(arrayGeneral[0].latitude,arrayGeneral[0].longitude);
         }
     //otherwise use the higher of the arrayGeneral
     }else{
+      $('#panel-body>div').addClass('animate-in');
         bestSellerH.innerHTML=arrayGeneral[0].sales;
         bestSellerP.innerHTML=arrayGeneral[0].name;
         getAddress(arrayGeneral[0].latitude, arrayGeneral[0].longitude);
@@ -376,7 +379,6 @@ function updateLatestSaleOne(sale){
                   "<br> Sales: " + sale.sales +
                   " at: " + prettyDate(new Date(sale.time));
   latestSaleOne.classList.add("animate-in");
-  $('#panel-body>div').addClass('animate-in');
 
   lsOne.appendChild(latestSaleOne);
 }
@@ -397,9 +399,7 @@ function updateLatestSaleTwo(sale){
                     "<br> Sales: " + arrayLatestSales[arrayLatestSales.length-2].sales +
                     " at: " + prettyDate(new Date(arrayLatestSales[arrayLatestSales.length-2].time));
     latestSaleTwo.classList.add("animate-in");
-    $('#panel-body>div').addClass('animate-in');
-
-    setTimeout(function(){lsTwo.appendChild(latestSaleTwo)}, 100);
+    setTimeout(function(){lsTwo.appendChild(latestSaleTwo)}, 150);
   }
 }
 

@@ -8,16 +8,12 @@ function init(){
 var lastReportTime=0,
   totalSales=0,
   arrayGeneral=[],
-  arraySums= [],
-  arryaNames= [],
 
   map,
-  bestSeller,
-  sum,
   salesGraph = document.getElementById("salesGraph"),
-  topSellers = document.getElementById("topSellers"),
-  bestSellerP= document.getElementById("bestSellerP"),
-  bestSellerH= document.getElementById("bestSellerH"),
+  salesDoughnut = document.getElementById("salesDoughnut"),
+  bestSellingCity= document.getElementById("bestSellingCity"),
+  bestSale= document.getElementById("bestSale"),
   panelBody= document.getElementById("panel-body"),
   containerFluid= document.getElementById("container-fluid"),
   body= document.getElementsByTagName('body')[0];
@@ -53,7 +49,7 @@ var dataDoughnut ={
     }]
   };
 
-var myDoughnutChart = new Chart(topSellers, {
+var myDoughnutChart = new Chart(salesDoughnut, {
   type: 'doughnut',
   data: dataDoughnut,
   options: {
@@ -158,14 +154,17 @@ function updateSales(sale){
 
   createTotalSales(sale);
   createLiveSales(sale);
-  updateLatestSales(sale);
+  createLatestSales(sale);
   addDataToLineChart(sale)
   myLineChart.update();
-  addRepeated(arrayGeneral, sale);
+
+  var repetition= addRepeated(sale);
+  if(!repetition){
+    arrayGeneral.push(sale);
+  }
   arrayGeneral.sort(toAsc);
-  arrayGeneral.push(sale);
-  updateBestseller(arrayGeneral[0]);
-  // console.table(arrayGeneral);
+  createBestseller(arrayGeneral[0]);
+  console.table(arrayGeneral);
   addDataToDon(sale);
   if (map){
     addPins(sale);
@@ -173,11 +172,11 @@ function updateSales(sale){
   lastReportTime= sale.time;
 };
 
-function addRepeated(arrayGeneral, sale){
+function addRepeated(sale){
   for (obj of arrayGeneral){
     if(obj.name == sale.name){
       obj.sales += sale.sales;
-      console.log('hay copias!!');
+      return true;
     }
   }
 }
@@ -190,10 +189,10 @@ function toDisc(a,b){
     return b.sales-a.sales;
 };
 
-function updateBestseller(bestSeller){
+function createBestseller(bestSeller){
   $('#panel-body>div').addClass('animate-in');
-  bestSellerH.innerHTML=bestSeller.sales;
-  bestSellerP.innerHTML=bestSeller.name;
+  bestSale.innerHTML=bestSeller.sales;
+  bestSellingCity.innerHTML=bestSeller.name;
   getAddress(bestSeller.latitude,bestSeller.longitude);
 }
 
@@ -202,7 +201,10 @@ function createLiveSales(sale){
   let salesDiv=document.getElementById("liveTable");
   let tr=document.createElement("tr");
   tr.setAttribute("class", "saleItem");
-  tr.innerHTML="<td>" + sale.name + "</td><td>" + sale.sales + "</td><td> <small>" + prettyDate(new Date(sale.time)) + "</small></td>";
+  tr.innerHTML="<td>" + sale.name + "</td><td>" +
+              sale.sales + "</td><td> <small>" +
+              prettyDate(new Date(sale.time)) +
+              "</small></td>";
   salesDiv.insertBefore(tr, salesDiv.childNodes[0]);
 }
 
@@ -273,11 +275,11 @@ function getAddress(myLatitude,myLongitude) {
     }else{
       return false;
     }
-  updateBestSellerP(infowindow,addressPara);
+  updateBestSellerAddress(infowindow,addressPara);
   });
 }
 
-function updateBestSellerP(infowindow,addressPara){
+function updateBestSellerAddress(infowindow,addressPara){
   if(!addressPara){
     addressPara= document.createElement("p");
     addressPara.id= "topSellerAddress";
@@ -288,7 +290,7 @@ function updateBestSellerP(infowindow,addressPara){
   };
 };
 
-function updateLatestSales(sale){
+function createLatestSales(sale){
   updateLatestSaleOne(sale);
   updateLatestSaleTwo(sale);
 };
@@ -343,33 +345,7 @@ function addDataToDon(sale){
   myDoughnutChart.update();
 }
 
-function findBestFive(arrayOfBest, arrayFor5Best){
-  if(arrayOfBest.length<5){
-    for (var item of arrayOfBest){
-      arrayFor5Best.push({name: item.name, sales: item.sales})
-    }
-  }else  if(arrayOfBest.length>= 5){
-    for (var i=0; i<=4; i++){
-      arrayFor5Best.push({name: arrayOfBest[i].name, sales: arrayOfBest[i].sales})
-    }
-  }
-  return arrayFor5Best;
-}
-
-function findArrayBest5Names(arrayOfFiveBest){
-  return arrayOfFiveBest.map(function(items){
-    return items.name;
-  })
-}
-
-function findArrayBest5Sales(arrayOfFiveBest){
-  return arrayOfFiveBest.map(function(items){
-    return items.sales;
-  })
-}
-
 panelBody.addEventListener("click", createModalDiv)
-
 
 function createModalDiv(){
 
@@ -422,17 +398,13 @@ function crateDivContainingP(divModal, divContent){
 }
 
 function createPContent(modalListWrapper, divModal){
-  if(arraySums.length>0){
-    for (var item of arraySums){
-      if(item.sales>9){
-        var pContentSums= document.createElement("p");
-        pContentSums.classList.add("modalP");
-        pContentSums.innerHTML= item.name + " sold: " + item.sales + " muffins";
-        modalListWrapper.appendChild(pContentSums);
-      }
-    }
+
+  for(item of arrayGeneral){
+    var pContentSums= document.createElement("p");
+    pContentSums.classList.add("modalP");
+    pContentSums.innerHTML= item.name + " sold: " + item.sales + " muffins";
+    modalListWrapper.appendChild(pContentSums);
   }
   divModal.style.visibility = "visible";
   divModal.style.opacity= '1';
-
 }

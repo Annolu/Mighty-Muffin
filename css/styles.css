@@ -16,7 +16,8 @@ a {
 
 h1 {
   font-size: 43px;
-  font-weight: 100; }
+  font-weight: 100;
+  padding: 7px 15px; }
   h1 small {
     font-size: 50%;
     font-weight: 100;
@@ -43,10 +44,7 @@ p {
   box-shadow: 2px 2px 14px 0px #aaaaaa;
   border-radius: 8px;
   margin-bottom: 15px;
-  cursor: pointer;
   transition: all 200ms ease; }
-  .panel-medium:hover {
-    background-color: #044c62; }
   .panel-medium .panel-body {
     padding: 25px 15px 10px 25px;
     color: #e6eff2; }
@@ -64,8 +62,7 @@ p {
   .panel-big .panel-body {
     padding: 10px 15px; }
   .panel-big .table-sales {
-    overflow-y: scroll;
-    max-height: 258px; }
+    overflow-y: scroll; }
 
 .sidebar {
   background-color: #0e1424;
@@ -91,7 +88,12 @@ p {
   font-size: 75px;
   font-weight: 100;
   margin-bottom: 0;
-  min-height: 100px; }
+  min-height: 95px; }
+.central-section .modal-button {
+  color: rgba(66, 134, 244, 0.7);
+  cursor: pointer; }
+  .central-section .modal-button:hover {
+    text-decoration: underline; }
 
 .map {
   width: 100%;
@@ -228,6 +230,8 @@ p {
     top: 30px;
     position: absolute;
     height: initial; }
+    .panel-big .table-sales {
+      max-height: 45vh; }
 
   .mobile-top {
     display: block; }

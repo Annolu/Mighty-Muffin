@@ -8,6 +8,8 @@ function init(){
 var lastReportTime=0,
   totalSales=0,
   arrayGeneral=[],
+  salesList= [],
+
 
   map,
   salesGraph = document.getElementById("salesGraph"),
@@ -16,8 +18,8 @@ var lastReportTime=0,
   bestSale= document.getElementById("bestSale"),
   panelBody= document.getElementById("panel-body"),
   containerFluid= document.getElementById("container-fluid"),
-  body= document.getElementsByTagName('body')[0];
-
+  body= document.getElementsByTagName('body')[0],
+  modalButton= document.getElementById('modalButton');
 
 var graphData ={
   labels: [],
@@ -158,7 +160,7 @@ function updateSales(sale){
   addDataToLineChart(sale)
   myLineChart.update();
 
-  var repetition= addRepeated(sale);
+  let repetition= addRepeated(sale);
   if(!repetition){
     arrayGeneral.push(sale);
   }
@@ -182,10 +184,6 @@ function addRepeated(sale){
 }
 
 function toAsc(a,b){
-    return b.sales-a.sales;
-};
-
-function toDisc(a,b){
     return b.sales-a.sales;
 };
 
@@ -310,7 +308,6 @@ function updateLatestSaleOne(sale){
   lsOne.appendChild(latestSaleOne);
 }
 
-var salesList= [];
 
 function updateLatestSaleTwo(sale){
   let lsTwo= document.getElementById("lsTwo");
@@ -330,7 +327,7 @@ function updateLatestSaleTwo(sale){
 
 function addDataToDon(sale){
 
-  var bestFive= arrayGeneral.slice(0,5);
+  let bestFive= arrayGeneral.slice(0,5);
 
   bestFiveNames= bestFive.map(function(sale){
     return sale.name;
@@ -345,7 +342,7 @@ function addDataToDon(sale){
   myDoughnutChart.update();
 }
 
-panelBody.addEventListener("click", createModalDiv)
+modalButton.addEventListener("click", createModalDiv)
 
 function createModalDiv(){
 

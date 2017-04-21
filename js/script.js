@@ -63,7 +63,7 @@ var myDoughnutChart = new Chart(topSellers, {
       display: true,
       position: 'bottom',
       labels: {
-        fontColor: 'rgba(0, 0, 0, 0.7)',
+        fontColor: '#777',
         fontSize: 10
       }
     },
@@ -100,6 +100,9 @@ var myLineChart = new Chart(salesGraph, {
           maxRotation: 0 // angle in degrees
         }
       }]
+    },
+    labels: {
+      fontColor: '#777',
     },
     title: {
       display: true,
@@ -299,14 +302,17 @@ function prettyDate(date) {
 
 function addDataToLineChart(sale){
 
+  let data= graphData.datasets[0].data;
+  let lables= graphData.labels;
+
   //add data up untill 10 entries
-  if (graphData.labels.length=== 10 && graphData.datasets[0].data.length===10){
+  if (lables.length=== 10 && data.length===10){
     //if more than 10 remove the first in the list
-    graphData.datasets[0].data.shift();
-    graphData.labels.shift();
+    data.shift();
+    lables.shift();
   }
-  graphData.datasets[0].data.push(sale.sales);
-  graphData.labels.push(sale.name);
+  data.push(sale.sales);
+  lables.push(sale.name);
 }
 
 function addPins(sale){
@@ -464,6 +470,7 @@ function findArrayBest5Sales(arrayOfFiveBest){
 
 panelBody.addEventListener("click", createModalDiv)
 
+
 function createModalDiv(){
 
   let divModal= document.createElement("div");
@@ -479,8 +486,9 @@ function createModalContent(divModal){
   window.addEventListener("click", function(event) {
     if (event.target == divModal) {
       body.classList.remove('bg-noScroll');
-      divModal.style.visibility= 'hidden';
-      divModal.style.opacity= '0';
+      containerFluid.removeChild(containerFluid.children[1]);
+      // divModal.style.visibility= 'hidden';
+      // divModal.style.opacity= '0';
     }
   })
 }
@@ -499,8 +507,9 @@ function createModalSpan(divModal,divContent){
   divContent.appendChild(modalSpan);
   crateDivContainingP(divModal, divContent);
   modalSpan.addEventListener("click", function(){
-      divModal.style.visibility= 'hidden';
-      divModal.style.opacity= '0';
+      containerFluid.removeChild(containerFluid.children[1]);
+      // divModal.style.visibility= 'hidden';
+      // divModal.style.opacity= '0';
       body.classList.remove('bg-noScroll');
   })
 }

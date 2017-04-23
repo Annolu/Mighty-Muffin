@@ -76,6 +76,7 @@ var myDoughnutChart = new Chart(salesDoughnut, {
 });
 
 var salesGraph = document.getElementById("salesGraph");
+salesGraph.style.maxHeight= "260px";
 
 var myLineChart = new Chart(salesGraph, {
   type: 'line',

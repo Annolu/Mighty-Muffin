@@ -10,13 +10,10 @@ var lastReportTime=0,
   arrayGeneral=[],
   salesList= [],
 
-
   map,
-  salesGraph = document.getElementById("salesGraph"),
-  salesDoughnut = document.getElementById("salesDoughnut"),
   bestSellingCity= document.getElementById("bestSellingCity"),
   bestSale= document.getElementById("bestSale"),
-  panelBody= document.getElementById("panel-body"),
+  panelBody= document.getElementById("panelBody"),
   containerFluid= document.getElementById("container-fluid"),
   body= document.getElementsByTagName('body')[0],
   modalButton= document.getElementById('modalButton');
@@ -51,6 +48,8 @@ var dataDoughnut ={
     }]
   };
 
+var salesDoughnut = document.getElementById("salesDoughnut");
+
 var myDoughnutChart = new Chart(salesDoughnut, {
   type: 'doughnut',
   data: dataDoughnut,
@@ -76,6 +75,8 @@ var myDoughnutChart = new Chart(salesDoughnut, {
     },
   }
 });
+
+var salesGraph = document.getElementById("salesGraph");
 
 var myLineChart = new Chart(salesGraph, {
   type: 'line',
@@ -152,8 +153,12 @@ function resizeMap(){
   });
 }
 
+var modalListWrapper,
+    divModal;
+
 function updateSales(sale){
 
+  addSaleTime(sale);
   createTotalSales(sale);
   createLiveSales(sale);
   createLatestSales(sale);
@@ -161,20 +166,27 @@ function updateSales(sale){
   myLineChart.update();
 
   let repetition= addRepeated(sale);
+  //if there are no repetitions, keep adding the sales to the array
   if(!repetition){
     arrayGeneral.push(sale);
   }
   arrayGeneral.sort(toAsc);
   createBestseller(arrayGeneral[0]);
-  console.table(arrayGeneral);
   addDataToDon(sale);
-  if (map){
-    addPins(sale);
+  addPins(sale);
+  if(modalListWrapper, divModal){
+    updateModal()
   }
-  lastReportTime= sale.time;
+};
+
+function addSaleTime(sale){
+  var d = new Date();
+  lastReportTime= d.getTime();
+  sale.time= lastReportTime;
 };
 
 function addRepeated(sale){
+  //if there's already a sale in the array, with the same name as the last one, add the sales
   for (obj of arrayGeneral){
     if(obj.name == sale.name){
       obj.sales += sale.sales;
@@ -227,7 +239,7 @@ function addDataToLineChart(sale){
 
   //add data up untill 10 entries
   if (lables.length=== 10 && data.length===10){
-    //if more than 10 remove the first in the list
+    //if more than 10 remove the first one in the list
     data.shift();
     lables.shift();
   }
@@ -261,6 +273,7 @@ function addInfoWindow(marker,sale){
     infowindow.close(map, marker);
   });
 }
+
 
 function getAddress(myLatitude,myLongitude) {
   let geocoder= new google.maps.Geocoder();
@@ -346,7 +359,7 @@ modalButton.addEventListener("click", createModalDiv)
 
 function createModalDiv(){
 
-  let divModal= document.createElement("div");
+  divModal= document.createElement("div");
   divModal.classList.add("modal");
   divModal.id= "myModal";
   containerFluid.appendChild(divModal);
@@ -358,14 +371,13 @@ function createModalContent(divModal){
   createDivContent(divModal);
   window.addEventListener("click", function(event) {
     if (event.target == divModal) {
-      body.classList.remove('bg-noScroll');
-      containerFluid.removeChild(containerFluid.children[1]);
+      closeModal()
     }
-  })
+  });
 }
 
 function createDivContent(divModal){
-  let divContent= document.createElement("div");
+  var divContent= document.createElement("div");
   divContent.classList.add("modal-content");
   divModal.appendChild(divContent);
   createModalSpan(divModal,divContent)
@@ -378,30 +390,42 @@ function createModalSpan(divModal,divContent){
   divContent.appendChild(modalSpan);
   crateDivContainingP(divModal, divContent);
   modalSpan.addEventListener("click", function(){
-    containerFluid.removeChild(containerFluid.children[1]);
-    body.classList.remove('bg-noScroll');
+    closeModal()
   })
+}
+
+function closeModal(){
+  divModal.style.visibility = "hidden";
+  divModal.style.opacity= '0';
+  setTimeout(function(){
+    containerFluid.removeChild(containerFluid.children[1]);
+  }, 500)
+  body.classList.remove('bg-noScroll');
 }
 
 function crateDivContainingP(divModal, divContent){
   var headerContent= document.createElement("h2");
-  headerContent.innerHTML= "Best sellers shops";
+  headerContent.innerHTML= "List of all sales";
   divContent.appendChild(headerContent);
-  var modalListWrapper= document.createElement("div");
+  modalListWrapper= document.createElement("div");
   modalListWrapper.classList.add("modal-list-wrapper");
   divContent.appendChild(modalListWrapper);
-
-  createPContent(modalListWrapper, divModal);
+  divModal.style.visibility = "visible";
+  divModal.style.opacity= '1';
+  var loadingP= document.createElement("p");
+  loadingP.classList.add("loader-para");
+  loadingP.innerHTML= 'Loading...'
+  modalListWrapper.appendChild(loadingP);
 }
 
-function createPContent(modalListWrapper, divModal){
+var pContentSums;
 
+function updateModal(){
+  modalListWrapper.innerHTML= '';
   for(item of arrayGeneral){
-    var pContentSums= document.createElement("p");
+    pContentSums= document.createElement("p");
     pContentSums.classList.add("modalP");
     pContentSums.innerHTML= item.name + " sold: " + item.sales + " muffins";
     modalListWrapper.appendChild(pContentSums);
   }
-  divModal.style.visibility = "visible";
-  divModal.style.opacity= '1';
 }

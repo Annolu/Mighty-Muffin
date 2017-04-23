@@ -154,7 +154,7 @@ p {
   width: 50%;
   height: 70%;
   transform: translateY(-300px);
-  animation: modalContent 0.4s ease both 0.1s;
+  animation: modalContent 200ms ease forwards;
   opacity: 0; }
   .modal-content h2 {
     margin: 10px; }
@@ -180,8 +180,18 @@ p {
     .modal-content .modal-list-wrapper .modalP {
       border-bottom: 1px solid #ddd;
       font-size: 16px;
-      padding: 10px; }
+      padding: 10px;
+      transform-origin: center top;
+      animation: modalInfoIn 700ms ease forwards; }
+  .modal-content .loader-para {
+    font-size: 16px;
+    padding: 10px; }
 
+@keyframes modalInfoIn {
+  0% {
+    transform: rotateX(-90deg); }
+  100% {
+    transform: rotateX(0deg); } }
 @keyframes modalContent {
   0% {
     transform: translateY(-300px);
@@ -221,6 +231,9 @@ p {
   100% {
     transform: rotate(360deg); } }
 @media screen and (max-width: 992px) {
+  h2 {
+    font-size: 40px; }
+
   .panel-medium {
     width: 47%; }
 
@@ -245,14 +258,15 @@ p {
   .modal-content {
     width: 70%; } }
 @media screen and (max-width: 580px) {
+  h2 {
+    font-size: 35px; }
+
   .central-section > div {
     padding: 0; }
 
   h1 {
-    font-size: 38px; }
-
-  h2 {
-    font-size: 35px; }
+    font-size: 38px;
+    padding: 0; }
 
   .modal-content {
     width: 85%;

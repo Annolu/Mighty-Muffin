@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: rgba(227, 204, 181, 0.2);
+  background-color: rgba(227, 204, 181, 0.1);
   overflow-x: hidden; }
 
 a {
@@ -53,16 +53,19 @@ p {
     .panel-medium .panel-body h2 {
       margin-top: 0; }
 
+.tab-content {
+  background-color: white;
+  border-radius: 3px; }
+
 .panel-big {
-  min-height: 300px;
-  background-color: rgba(4, 76, 98, 0.2);
-  border: 1px solid rgba(4, 76, 98, 0.4);
-  overflow: hidden;
-  height: 320px; }
+  min-height: 320px;
+  background-color: white;
+  overflow: hidden; }
   .panel-big .panel-body {
     padding: 10px 15px; }
   .panel-big .table-sales {
-    overflow-y: scroll; }
+    overflow-y: scroll;
+    max-height: 258px; }
 
 .sidebar {
   background-color: #0e1424;
@@ -182,16 +185,16 @@ p {
       font-size: 16px;
       padding: 10px;
       transform-origin: center top;
-      animation: modalInfoIn 700ms ease forwards; }
+      animation: modalInfoIn 400ms ease forwards; }
   .modal-content .loader-para {
     font-size: 16px;
     padding: 10px; }
 
 @keyframes modalInfoIn {
   0% {
-    transform: rotateX(-90deg); }
+    opacity: 0; }
   100% {
-    transform: rotateX(0deg); } }
+    opacity: 1; } }
 @keyframes modalContent {
   0% {
     transform: translateY(-300px);
@@ -230,6 +233,10 @@ p {
     border-top-color: #363e52; }
   100% {
     transform: rotate(360deg); } }
+@media screen and (min-width: 1281px) {
+  .dashboard > div {
+    padding-top: 40px;
+    padding-bottom: 40px; } }
 @media screen and (max-width: 992px) {
   h2 {
     font-size: 40px; }
@@ -243,8 +250,6 @@ p {
     top: 30px;
     position: absolute;
     height: initial; }
-    .panel-big .table-sales {
-      max-height: 45vh; }
 
   .mobile-top {
     display: block; }

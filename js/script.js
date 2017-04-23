@@ -5,10 +5,9 @@ function init(){
   setInterval(fetcheData, 3000);
 }
 
-var lastReportTime=0,
-  totalSales=0,
-  arrayGeneral=[],
-  salesList= [],
+var totalSales=0,
+    arrayGeneral=[],
+    salesList= [],
 
   map,
   bestSellingCity= document.getElementById("bestSellingCity"),
@@ -154,7 +153,7 @@ function resizeMap(){
 }
 
 var modalListWrapper,
-    divModal;
+    myModal;
 
 function updateSales(sale){
 
@@ -174,14 +173,13 @@ function updateSales(sale){
   createBestseller(arrayGeneral[0]);
   addDataToDon(sale);
   addPins(sale);
-  if(modalListWrapper, divModal){
+  if(modalListWrapper, myModal){
     updateModal()
   }
 };
 
 function addSaleTime(sale){
-  var d = new Date();
-  lastReportTime= d.getTime();
+  let lastReportTime= Date.now();
   sale.time= lastReportTime;
 };
 
@@ -226,9 +224,9 @@ function createTotalSales(sale){
 
 function prettyDate(date) {
   if(date.getUTCMinutes()<10){
-    return date.getUTCHours()+':0'+date.getUTCMinutes();
+    return date.getHours()+':0'+date.getUTCMinutes();
   }else{
-    return date.getUTCHours()+':'+date.getUTCMinutes();
+    return date.getHours()+':'+date.getUTCMinutes();
   }
 }
 
@@ -355,75 +353,76 @@ function addDataToDon(sale){
   myDoughnutChart.update();
 }
 
-modalButton.addEventListener("click", createModalDiv)
+modalButton.addEventListener("click", createModal)
 
-function createModalDiv(){
-
-  divModal= document.createElement("div");
-  divModal.classList.add("modal");
-  divModal.id= "myModal";
-  containerFluid.appendChild(divModal);
-  createModalContent(divModal);
+function createModal(){
+  myModal= document.createElement("div");
+  myModal.classList.add("modal");
+  myModal.id= "myModal";
+  containerFluid.appendChild(myModal);
+  addModalContent(myModal);
   body.classList.add('bg-noScroll');
 }
 
-function createModalContent(divModal){
-  createDivContent(divModal);
+function addModalContent(myModal){
+  createmodalContent(myModal);
   window.addEventListener("click", function(event) {
-    if (event.target == divModal) {
+    if (event.target == myModal) {
       closeModal()
     }
   });
 }
 
-function createDivContent(divModal){
-  var divContent= document.createElement("div");
-  divContent.classList.add("modal-content");
-  divModal.appendChild(divContent);
-  createModalSpan(divModal,divContent)
+function createmodalContent(myModal){
+  let modalContent= document.createElement("div");
+  modalContent.classList.add("modal-content");
+  myModal.appendChild(modalContent);
+  createCloseButton(myModal,modalContent)
+  crateModalListWrapper(myModal, modalContent);
 }
 
-function createModalSpan(divModal,divContent){
+function createCloseButton(myModal,modalContent){
   let modalSpan= document.createElement("span");
   modalSpan.classList.add("close");
   modalSpan.innerHTML= "&times;";
-  divContent.appendChild(modalSpan);
-  crateDivContainingP(divModal, divContent);
+  modalContent.appendChild(modalSpan);
   modalSpan.addEventListener("click", function(){
     closeModal()
   })
 }
 
 function closeModal(){
-  divModal.style.visibility = "hidden";
-  divModal.style.opacity= '0';
+  myModal.style.visibility = "hidden";
+  myModal.style.opacity= '0';
   setTimeout(function(){
     containerFluid.removeChild(containerFluid.children[1]);
   }, 500)
   body.classList.remove('bg-noScroll');
 }
 
-function crateDivContainingP(divModal, divContent){
-  var headerContent= document.createElement("h2");
+function crateModalListWrapper(myModal, modalContent){
+  let headerContent= document.createElement("h2");
   headerContent.innerHTML= "List of all sales";
-  divContent.appendChild(headerContent);
+  modalContent.appendChild(headerContent);
   modalListWrapper= document.createElement("div");
   modalListWrapper.classList.add("modal-list-wrapper");
-  divContent.appendChild(modalListWrapper);
-  divModal.style.visibility = "visible";
-  divModal.style.opacity= '1';
-  var loadingP= document.createElement("p");
+  modalContent.appendChild(modalListWrapper);
+  createLoadingP()
+  myModal.style.visibility = "visible";
+  myModal.style.opacity= '1';
+}
+
+function createLoadingP() {
+  let loadingP= document.createElement("p");
   loadingP.classList.add("loader-para");
   loadingP.innerHTML= 'Loading...'
   modalListWrapper.appendChild(loadingP);
 }
 
-var pContentSums;
-
 function updateModal(){
   modalListWrapper.innerHTML= '';
   for(item of arrayGeneral){
-    pContentSums= document.createElement("p");
+    let pContentSums= document.createElement("p");
     pContentSums.classList.add("modalP");
     pContentSums.innerHTML= item.name + " sold: " + item.sales + " muffins";
     modalListWrapper.appendChild(pContentSums);

@@ -63,22 +63,28 @@ p{
       animation: introDl 300ms ease-in-out;
     }
     h2{
-        margin-top: 0;
+      margin-top: 0;
     }
   }
 }
 
+.tab-content{
+  background-color: white;
+  border-radius: 3px;
+}
+
 .panel-big {
-  min-height: 300px;
-  background-color: transparentize($main-colour, .8);
-  border: 1px solid transparentize($main-colour, .6);
+  min-height: 320px;
+  background-color: white;
   overflow: hidden;
-  height: 320px;
+  // height: 320px;
   .panel-body{
     padding: 10px 15px;
+
   }
   .table-sales{
     overflow-y: scroll;
+    max-height: 258px;
   }
 }
 
@@ -228,7 +234,7 @@ p{
       font-size: 16px;
       padding: 10px;
       transform-origin: center top;
-      animation: modalInfoIn 700ms ease forwards;
+      animation: modalInfoIn 400ms ease forwards;
     }
   }
   .loader-para{
@@ -239,10 +245,10 @@ p{
 
 @keyframes modalInfoIn {
   0%{
-    transform:rotateX(-90deg);
+    opacity: 0;
   }
   100%{
-    transform: rotateX(0deg);
+    opacity: 1;
   }
 }
 
@@ -297,6 +303,16 @@ p{
   }
 }
 
+@media screen and (min-width: 1281px) {
+  .dashboard{
+    >div{
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+  }
+}
+
+
 @media screen and (max-width: 992px) {
 
   h2{
@@ -314,7 +330,7 @@ p{
     position: absolute;
     height: initial;
     .table-sales{
-      max-height: 45vh;
+    // max-height: 300px;
     }
   }
 

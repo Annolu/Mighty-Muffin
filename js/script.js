@@ -8,14 +8,13 @@ function init(){
 var totalSales=0,
     arrayGeneral=[],
     salesList= [],
-
-  map,
-  bestSellingCity= document.getElementById("bestSellingCity"),
-  bestSale= document.getElementById("bestSale"),
-  panelBody= document.getElementById("panelBody"),
-  containerFluid= document.getElementById("container-fluid"),
-  body= document.getElementsByTagName('body')[0],
-  modalButton= document.getElementById('modalButton');
+    map,
+    bestSellingCity= document.getElementById("bestSellingCity"),
+    bestSale= document.getElementById("bestSale"),
+    panelBody= document.getElementById("panelBody"),
+    containerFluid= document.getElementById("container-fluid"),
+    body= document.getElementsByTagName('body')[0],
+    modalButton= document.getElementById('modalButton');
 
 var graphData ={
   labels: [],
@@ -96,7 +95,7 @@ var myLineChart = new Chart(salesGraph, {
       }],
       xAxes: [{
         ticks: {
-          maxRotation: 0 // angle in degrees
+          maxRotation: 0
         }
       }]
     },
@@ -128,7 +127,7 @@ function fetcheData() {
 }
 
 function hideLoader(){
-  let loader= document.getElementById('loader-bg');
+  var loader= document.getElementById('loader-bg');
   loader.classList.add('hide-loader');
 }
 
@@ -165,7 +164,7 @@ function updateSales(sale){
   addDataToLineChart(sale)
   myLineChart.update();
 
-  let repetition= addRepeated(sale);
+  var repetition= addRepeated(sale);
   //if there are no repetitions, keep adding the sales to the array
   if(!repetition){
     arrayGeneral.push(sale);
@@ -180,7 +179,7 @@ function updateSales(sale){
 };
 
 function addSaleTime(sale){
-  let lastReportTime= Date.now();
+  var lastReportTime= Date.now();
   sale.time= lastReportTime;
 };
 
@@ -207,8 +206,8 @@ function createBestseller(bestSeller){
 
 //create live sales table
 function createLiveSales(sale){
-  let salesDiv=document.getElementById("liveTable");
-  let tr=document.createElement("tr");
+  var salesDiv=document.getElementById("liveTable");
+  var tr=document.createElement("tr");
   tr.setAttribute("class", "saleItem");
   tr.innerHTML="<td>" + sale.name + "</td><td>" +
               sale.sales + "</td><td> <small>" +
@@ -233,8 +232,8 @@ function prettyDate(date) {
 
 function addDataToLineChart(sale){
 
-  let data= graphData.datasets[0].data;
-  let lables= graphData.labels;
+  var data= graphData.datasets[0].data;
+  var lables= graphData.labels;
 
   //add data up untill 10 entries
   if (lables.length=== 10 && data.length===10){
@@ -246,10 +245,11 @@ function addDataToLineChart(sale){
   lables.push(sale.name);
 }
 
+//add pins to google map
 function addPins(sale){
-  let coords =  {latitude: sale.latitude, longitude: sale.longitude};
-  let latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
-  let marker = new google.maps.Marker({
+  var coords =  {latitude: sale.latitude, longitude: sale.longitude};
+  var latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
+  var marker = new google.maps.Marker({
     position: latLng,
     map: map,
     draggable: true,
@@ -257,10 +257,10 @@ function addPins(sale){
   });
   addInfoWindow(marker,sale);
 }
-
+//info for pins
 function addInfoWindow(marker,sale){
-  let contentString = sale.name + ' <br> Sales: ' + sale.sales;
-  let infowindow = new google.maps.InfoWindow({
+  var contentString = sale.name + ' <br> Sales: ' + sale.sales;
+  var infowindow = new google.maps.InfoWindow({
     content: contentString
   });
 
@@ -275,10 +275,10 @@ function addInfoWindow(marker,sale){
 
 
 function getAddress(myLatitude,myLongitude) {
-  let geocoder= new google.maps.Geocoder();
-  let location= new google.maps.LatLng(myLatitude, myLongitude);
-  let infowindow = new google.maps.InfoWindow;
-  let addressPara= document.getElementById("topSellerAddress");
+  var geocoder= new google.maps.Geocoder();
+  var location= new google.maps.LatLng(myLatitude, myLongitude);
+  var infowindow = new google.maps.InfoWindow;
+  var addressPara= document.getElementById("topSellerAddress");
   geocoder.geocode({'latLng': location}, function (results, status) {
     if(status == google.maps.GeocoderStatus.OK) {
       infowindow.setContent(results[1].formatted_address);
@@ -307,12 +307,12 @@ function createLatestSales(sale){
 
 function updateLatestSaleOne(sale){
 
-  let lsOne= document.getElementById("lsOne");
+  var lsOne= document.getElementById("lsOne");
 
   if(lsOne.childNodes[0]){
     lsOne.removeChild(lsOne.childNodes[0])
   }
-  let latestSaleOne= document.createElement("p");
+  var latestSaleOne= document.createElement("p");
   latestSaleOne.innerHTML=sale.name +
                   "<br> Sales: " + sale.sales +
                   " at: " + prettyDate(new Date(sale.time));
@@ -322,12 +322,12 @@ function updateLatestSaleOne(sale){
 
 
 function updateLatestSaleTwo(sale){
-  let lsTwo= document.getElementById("lsTwo");
+  var lsTwo= document.getElementById("lsTwo");
 
   salesList.push(sale);
   if(salesList[salesList.length-2]){
     lsTwo.innerHTML= '';
-    let latestSaleTwo= document.createElement("p");
+    var latestSaleTwo= document.createElement("p");
 
     latestSaleTwo.innerHTML=salesList[salesList.length-2].name +
                     "<br> Sales: " + salesList[salesList.length-2].sales +
@@ -337,9 +337,10 @@ function updateLatestSaleTwo(sale){
   }
 }
 
+//add the best selling five to doughnut chart
 function addDataToDon(sale){
 
-  let bestFive= arrayGeneral.slice(0,5);
+  var bestFive= arrayGeneral.slice(0,5);
 
   bestFiveNames= bestFive.map(function(sale){
     return sale.name;
@@ -375,7 +376,7 @@ function addModalContent(myModal){
 }
 
 function createmodalContent(myModal){
-  let modalContent= document.createElement("div");
+  var modalContent= document.createElement("div");
   modalContent.classList.add("modal-content");
   myModal.appendChild(modalContent);
   createCloseButton(myModal,modalContent)
@@ -383,7 +384,7 @@ function createmodalContent(myModal){
 }
 
 function createCloseButton(myModal,modalContent){
-  let modalSpan= document.createElement("span");
+  var modalSpan= document.createElement("span");
   modalSpan.classList.add("close");
   modalSpan.innerHTML= "&times;";
   modalContent.appendChild(modalSpan);
@@ -402,7 +403,7 @@ function closeModal(){
 }
 
 function crateModalListWrapper(myModal, modalContent){
-  let headerContent= document.createElement("h2");
+  var headerContent= document.createElement("h2");
   headerContent.innerHTML= "List of all sales";
   modalContent.appendChild(headerContent);
   modalListWrapper= document.createElement("div");
@@ -414,7 +415,7 @@ function crateModalListWrapper(myModal, modalContent){
 }
 
 function createLoadingP() {
-  let loadingP= document.createElement("p");
+  var loadingP= document.createElement("p");
   loadingP.classList.add("loader-para");
   loadingP.innerHTML= 'Loading...'
   modalListWrapper.appendChild(loadingP);
@@ -423,7 +424,7 @@ function createLoadingP() {
 function updateModal(){
   modalListWrapper.innerHTML= '';
   for(item of arrayGeneral){
-    let pContentSums= document.createElement("p");
+    var pContentSums= document.createElement("p");
     pContentSums.classList.add("modalP");
     pContentSums.innerHTML= item.name + " sold: " + item.sales + " muffins";
     modalListWrapper.appendChild(pContentSums);

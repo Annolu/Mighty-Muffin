@@ -275,16 +275,20 @@ p{
   background-color: rgba(0,0,0,.5);
   z-index: 3;
   transition: all 50ms ease;
+  display: -webkit-flex;
+  -webkit-align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
   &.hide-loader{
     visibility: hidden;
   }
   .loader-wrapper{
     position: relative;
     margin: 0 auto;
-    width: 60px;
-    height: 60px;
-    top: 270px;
-  }
+    width: 50px;
+    height: 50px;
+    align-self: center;
+   }
   .ring{
     width: 50px;
     height: 50px;

@@ -297,7 +297,8 @@ p {
     width: 100%;
     position: relative;
     left: 0;
-    top: 0; }
+    top: 0;
+    margin-bottom: 15px; }
 
   .dlStore {
     max-width: none; }

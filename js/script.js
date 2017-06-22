@@ -118,6 +118,7 @@ function fetcheData() {
 
   $.getJSON(url)
   .done(function(data) {
+    body.classList.remove('bg-noScroll');
     hideLoader();
     updateSales(data)
   })
